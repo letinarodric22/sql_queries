@@ -1,0 +1,80 @@
+1.SELECT o.OrderID,o.OrderDate,c.CustomerName,c.City,c.Address,c.PostalCode,s.ShipperName,p.ProductName,od.Quantity
+FROM Orders o
+JOIN Customers c ON o.CustomerID = c.CustomerID
+JOIN Shippers s ON o.ShipperID = s.ShipperID
+JOIN OrderDetails od ON o.OrderID = od.OrderID
+JOIN Products p ON od.ProductID = p.ProductID;
+
+2.SELECT DISTINCT P.ProductID,P.ProductName,S.ShipperName
+FROM Products P
+JOIN OrderDetails OD ON P.ProductID = OD.ProductID
+JOIN Orders O ON OD.OrderID = O.OrderID
+JOIN Shippers S ON O.ShipperID = S.ShipperID;
+
+3.SELECT Shippers.ShipperName,COUNT(*) AS ShippedProductCount
+FROM Shippers
+JOIN Orders ON Shippers.ShipperId = Orders.ShipperId
+JOIN OrderDetails ON Orders.OrderId = OrderDetails.OrderId
+GROUP BY Shippers.ShipperName;
+
+4. SELECT CustomerName
+FROM Customers
+WHERE CustomerName NOT LIKE '%son%'
+
+5.SELECT SUM(od.Quantity * p.Price) AS TotalSales
+FROM Orders AS o
+JOIN OrderDetails AS od ON o.OrderID = od.OrderID
+JOIN Products AS p ON od.ProductID = p.ProductID
+WHERE o.OrderDate >= '1997-01-01' AND o.OrderDate <= '1997-12-31';
+
+
+6. SELECT c.CustomerName ,SUM(p.Price * od.Quantity) AS Total_Amount
+FROM Orders AS o 
+JOIN Customers AS c ON o.CustomerID = c.CustomerID
+JOIN Shippers AS s ON o.ShipperID = s.ShipperID
+JOIN OrderDetails AS od ON o.OrderID = od.OrderID
+JOIN Products AS p ON od.ProductID = p.ProductID
+GROUP BY C.CustomerName
+ORDER BY Total_Amount DESC;
+
+7.SELECT s.SupplierName, COUNT(p.ProductID) AS total_ordered
+FROM Suppliers s
+JOIN Products p ON s.SupplierID = p.SupplierID
+JOIN OrderDetails od ON p.ProductID = od.ProductID
+GROUP BY s.SupplierName
+ORDER BY total_ordered DESC
+LIMIT 1;
+
+8.SELECT p.ProductName, SUM(od.Quantity * p.Price) AS TotalSales
+FROM Products p
+JOIN OrderDetails od ON p.ProductID = od.ProductID
+GROUP BY p.ProductName;
+
+9.SELECT SUBSTR(OrderDate, 0, 8) AS Month,SUM(od.Quantity * p.Price) AS TotalSales
+FROM Orders o
+JOIN OrderDetails od ON o.OrderId = od.OrderId
+JOIN Products p ON od.ProductId = p.ProductId
+GROUP BY Month
+ORDER BY TotalSales DESC
+LIMIT 1;
+
+10.SELECT OrderDate,SUM(OD.Quantity * P.Price) AS TotalSales
+FROM Orders O
+JOIN OrderDetails OD ON O.OrderId = OD.OrderId
+JOIN Products P ON OD.ProductId = P.ProductId
+GROUP BY OrderDate;
+
+11. SELECT C.CustomerName,IFNULL(SUM(OD.Quantity * P.Price), 0) AS TotalSales
+FROM Customers C
+LEFT JOIN Orders O ON C.CustomerId = O.CustomerId
+LEFT JOIN OrderDetails OD ON O.OrderId = OD.OrderId
+LEFT JOIN Products P ON OD.ProductId = P.ProductId
+GROUP BY C.CustomerName;
+
+12. CREATE TABLE payments (
+    PaymentID INT PRIMARY KEY,
+    OrderID INT,
+    PaymentDate DATE,
+    Amount DECIMAL(10,2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);

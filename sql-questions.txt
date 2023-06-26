@@ -1,0 +1,58 @@
+1. INSERT INTO Customer
+   VALUES (92, "Letina Rodric", 'Rodri', 'Narok2022',    44, Kenya);
+
+2.INSERT INTO orders
+  VALUES(10445, 92, 4, '2000-07-12', 1);
+3. INSERT INTO Products
+   VALUES (78, 'mount kenya milk', 1, 1, '20boxes',   200);
+4.INSERT INTO OrderDetails
+  VALUES (519, 10444, 78, 30);
+
+5. DELETE FROM Customers WHERE    CustomerID=56;
+
+6.SELECT *
+ FROM Customers
+ WHERE Country = 'Brazil' OR 'Italy';
+
+#SELECT *
+FROM Customers
+WHERE Country IN ('Brazil','Italy');#
+
+7.SELECT CustomerName
+  FROM Customers
+  WHERE CustomerName like '%son%';
+
+8.SELECT * 
+  FROM Orders
+  WHERE OrderDate LIKE '1996-10%';
+
+9. SELECT ShipperID, COUNT(*) AS Total_orders
+   FROM Orders
+   GROUP BY ShipperID;
+
+10. SELECT * 
+   FROM Products
+   WHERE price > 25;
+
+SELECT ProductID, COUNT(*) AS Quantity_for_each_product
+FROM OrderDetails
+GROUP BY ProductID;
+
+
+
+Write a query to display the below columns, join the relevant tables:
+OrderId, CustomerName, ShipperName, Order_Amount(Price * Quantity), OrderDate
+
+
+SELECT
+  Orders.OrderID,
+  Customers.CustomerName,
+  Shippers.ShipperName,
+  Products.Price * OrderDetails.Quantity AS Order_Amount,
+  Orders.OrderDate
+FROM
+  Orders
+  JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+  JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+  JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID
+  JOIN Products ON OrderDetails.ProductID = Products.ProductID;
