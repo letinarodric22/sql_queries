@@ -1,42 +1,69 @@
-1. INSERT INTO Customer
-   VALUES (92, "Letina Rodric", 'Rodri', 'Narok2022',    44, Kenya);
+.
+Display products whose price is above 25.
 
-2.INSERT INTO orders
-  VALUES(10445, 92, 4, '2000-07-12', 1);
-3. INSERT INTO Products
-   VALUES (78, 'mount kenya milk', 1, 1, '20boxes',   200);
-4.INSERT INTO OrderDetails
-  VALUES (519, 10444, 78, 30);
 
-5. DELETE FROM Customers WHERE    CustomerID=56;
 
-6.SELECT *
- FROM Customers
- WHERE Country = 'Brazil' OR 'Italy';
+1.Insert a customer in the customers table,view the record and update the record
+answer::
+INSERT INTO Customer
+VALUES (92, "Letina Rodric", 'Rodri', 'Narok2022',    44, Kenya);
 
+
+2.Insert an order for the Customer inserted in number 1 above,choose employee and shipper.
+answer::
+INSERT INTO orders
+VALUES(10445, 92, 4, '2000-07-12', 1);
+
+
+3.Insert a new record in the Products table attach them to an existing supplier and category.
+answer::
+INSERT INTO Products
+VALUES (78, 'mount kenya milk', 1, 1, '20boxes',   200);
+
+4.Insert an orderdetail using the order in 2 above and product in 3.
+answer::
+INSERT INTO OrderDetails
+VALUES (519, 10444, 78, 30);
+
+5.Delete Customer whose CustomerID is 5
+answer::
+DELETE FROM Customers WHERE    CustomerID=56;
+
+6.Show customers who come from brazil or italy.
+answer::
+SELECT *
+FROM Customers
+WHERE Country = 'Brazil' OR 'Italy';
+alternative answer:::
 #SELECT *
 FROM Customers
 WHERE Country IN ('Brazil','Italy');#
 
-7.SELECT CustomerName
-  FROM Customers
-  WHERE CustomerName like '%son%';
+7.Display Customers who have the word ‘son’ in their CustomerName. 
+answer::
+SELECT CustomerName
+FROM Customers
+WHERE CustomerName like '%son%';
 
-8.SELECT * 
-  FROM Orders
-  WHERE OrderDate LIKE '1996-10%';
+8.Display orders made in the month of October 1996, display in asc order.
+answer::
+SELECT * 
+FROM Orders
+WHERE OrderDate LIKE '1996-10%';
 
-9. SELECT ShipperID, COUNT(*) AS Total_orders
-   FROM Orders
-   GROUP BY ShipperID;
+9.Find the total orders shipped by each of the 3 shippers.
+ answer::
+SELECT ShipperID, COUNT(*) AS Total_orders
+FROM Orders
+GROUP BY ShipperID;
 
-10. SELECT * 
-   FROM Products
-   WHERE price > 25;
+10.Display products whose price is above 25.
+answer::
+ SELECT * 
+ FROM Products
+ WHERE price > 25;
 
-SELECT ProductID, COUNT(*) AS Quantity_for_each_product
-FROM OrderDetails
-GROUP BY ProductID;
+
 
 
 
